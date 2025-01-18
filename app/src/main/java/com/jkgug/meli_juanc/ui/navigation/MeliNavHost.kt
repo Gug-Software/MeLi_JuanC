@@ -14,24 +14,13 @@ fun MeliNavHost(
     modifier: Modifier = Modifier
 ) {
 
-    val startDestination = ProductDetails.route
+    val startDestination = Search.route
     NavHost(
         navController = navController,
         startDestination = startDestination,
         modifier = modifier
     ) {
-
-        composable(
-            route = Search.route,
-        ) {
-            SearchScreen()
-        }
-
-        composable(
-            route = ProductDetails.route,
-        ) {
-            ProductDetailsScreen()
-        }
-
+        composable(route = Search.route) { SearchScreen() }
+        composable(route = ProductDetails.route) { ProductDetailsScreen() }
     }
 }

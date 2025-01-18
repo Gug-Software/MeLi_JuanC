@@ -26,14 +26,12 @@ class MainActivity : ComponentActivity() {
             MeLiApp()
         }
     }
-
-
 }
 
 @Composable
 private fun MeLiApp() {
-    MeLi_JuanCTheme {
 
+    MeLi_JuanCTheme {
         val navController = rememberNavController()
         val snackBarHostState = remember { SnackbarHostState() }
         Surface(
@@ -47,7 +45,6 @@ private fun MeLiApp() {
                     modifier = Modifier.padding(innerPadding)
                 )
             }
-
         }
     }
 }

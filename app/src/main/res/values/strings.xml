@@ -1,3 +1,23 @@
 <resources>
+
     <string name="app_name">MeLi_JuanC</string>
+
+    <string name="greeting_title">Hola MeLi 👋</string>
+    <string name="greeting_subtitle">Prueba de Juan C. Martínez O.</string>
+    <string name="greeting_searching">Buscando cositas…</string>
+
+    <string name="search_placeholder">Buscar en Mercado Libre</string>
+    <string name="search_message">Buscando en Mercado Libre</string>
+
+    <string name="empty_content_title">¿Buscas algo en particular?</string>
+    <string name="empty_content_subtitle">Utiliza la barra de búsqueda ubicada en la parte superior.</string>
+
+    <string name="not_results_title">¡Buuu! No hemos encontrado lo que buscas.</string>
+    <string name="not_results_subtitle">¿Te gustaría que te ayudemos a encontrar algo similar?</string>
+
+    <string name="error_title">Lo sentimos, ha ocurrido un error.</string>
+    <string name="error_subtitle">Por favor, inténtalo de nuevo más tarde.</string>
+    <string name="error_retry">Reintentar</string>
+
+
 </resources>
