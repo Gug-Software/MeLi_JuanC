@@ -1,5 +1,6 @@
 package com.jkgug.meli_juanc.ui.navigation
 
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -11,6 +12,7 @@ import com.jkgug.meli_juanc.ui.screen.search.SearchScreen
 @Composable
 fun MeliNavHost(
     navController: NavHostController,
+    snackBarHostState: SnackbarHostState,
     modifier: Modifier = Modifier
 ) {
 
@@ -20,7 +22,7 @@ fun MeliNavHost(
         startDestination = startDestination,
         modifier = modifier
     ) {
-        composable(route = Search.route) { SearchScreen() }
+        composable(route = Search.route) { SearchScreen(snackBarHostState = snackBarHostState) }
         composable(route = ProductDetails.route) { ProductDetailsScreen() }
     }
 }

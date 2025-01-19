@@ -5,7 +5,6 @@ import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
@@ -26,7 +25,7 @@ import com.jkgug.meli_juanc.ui.theme.MeLi_JuanCTheme
 
 @Composable
 fun EmptyContent(
-    modifier: Modifier
+    modifier: Modifier = Modifier
 ) {
 
     val spaceM = dimensionResource(R.dimen.space_m)
@@ -35,10 +34,11 @@ fun EmptyContent(
 
     Box(
         contentAlignment = Alignment.Center,
-        modifier = modifier.fillMaxSize()
+        modifier = modifier
     ) {
         Column(
-            modifier = Modifier.padding(spaceM),
+            modifier = Modifier
+                .padding(spaceM),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(spaceS),
         ) {
@@ -62,7 +62,6 @@ fun EmptyContent(
             )
         }
     }
-
 
 }
 

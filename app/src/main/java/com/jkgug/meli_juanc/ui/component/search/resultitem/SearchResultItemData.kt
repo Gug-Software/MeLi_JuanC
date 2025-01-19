@@ -38,7 +38,7 @@ fun SearchResultItemData(
             modifier = Modifier.fillMaxWidth()
         )
         ProductPriceView(product.price)
-        ProductInstallmentsView(product.installments)
+        product.installments?.let { ProductInstallmentsView(it) }
         if (product.freeShipping) {
             ProductFreeShippingView()
         }

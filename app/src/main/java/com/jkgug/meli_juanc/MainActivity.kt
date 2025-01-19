@@ -42,6 +42,7 @@ private fun MeLiApp() {
             ) { innerPadding ->
                 MeliNavHost(
                     navController = navController,
+                    snackBarHostState = snackBarHostState,
                     modifier = Modifier.padding(innerPadding)
                 )
             }

@@ -5,6 +5,6 @@ data class Product(
     val title: String = "",
     val thumbnail: String = "",
     val price: ProductPrice,
-    val installments: ProductInstallments,
+    val installments: ProductInstallments? = null,
     val freeShipping: Boolean = false,
 )

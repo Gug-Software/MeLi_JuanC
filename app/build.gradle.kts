@@ -57,6 +57,9 @@ dependencies {
     implementation(libs.lifecycle.viewmodel.compose)
     implementation(libs.koin.android)
     implementation(libs.koin.androidx.compose)
+    implementation(libs.retrofit) // Replace with latest Retrofit version
+    implementation(libs.converter.gson)
+
 
     testImplementation(libs.junit)
 

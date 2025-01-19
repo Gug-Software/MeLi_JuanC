@@ -4,6 +4,7 @@ import android.content.res.Configuration.UI_MODE_NIGHT_NO
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -27,7 +28,7 @@ import com.jkgug.meli_juanc.R
 import com.jkgug.meli_juanc.ui.theme.MeLi_JuanCTheme
 
 @Composable
-fun ErrorAndRetry(
+fun ErrorAndRetryView(
     onRetryAction: () -> Unit,
     modifier: Modifier
 ) {
@@ -38,58 +39,64 @@ fun ErrorAndRetry(
 
     val sizeImage = dimensionResource(R.dimen.size_image)
 
-    Column(
+    Box(
+        contentAlignment = Alignment.Center,
         modifier = modifier
-            .padding(spaceXL),
-        verticalArrangement = Arrangement.spacedBy(spaceS),
-        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        val cardElevation = dimensionResource(R.dimen.card_elevation)
-        Card(
-            modifier = Modifier
-                .fillMaxWidth(),
-            elevation = CardDefaults.cardElevation(defaultElevation = cardElevation),
-            colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.errorContainer,
-            ),
-            border = BorderStroke(
-                width = dimensionResource(R.dimen.border_xs),
-                color = MaterialTheme.colorScheme.error
-            )
+        Column(
+            modifier = modifier
+                .padding(spaceXL),
+            verticalArrangement = Arrangement.spacedBy(spaceS),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Column(
+            val cardElevation = dimensionResource(R.dimen.card_elevation)
+            Card(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(spaceM),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Icon(
-                    Icons.TwoTone.Warning,
-                    contentDescription = "",
-                    tint = MaterialTheme.colorScheme.tertiary,
-                    modifier = Modifier.size(sizeImage)
-                )
-                Text(
-                    text = stringResource(id = R.string.error_title),
-                    style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.error,
-                    fontWeight = FontWeight.Bold
-                )
-                Text(
-                    text = stringResource(id = R.string.error_subtitle),
-                    style = MaterialTheme.typography.bodyMedium,
+                    .fillMaxWidth(),
+                elevation = CardDefaults.cardElevation(defaultElevation = cardElevation),
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.errorContainer,
+                ),
+                border = BorderStroke(
+                    width = dimensionResource(R.dimen.border_xs),
                     color = MaterialTheme.colorScheme.error
                 )
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(spaceM),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Icon(
+                        Icons.TwoTone.Warning,
+                        contentDescription = "",
+                        tint = MaterialTheme.colorScheme.tertiary,
+                        modifier = Modifier.size(sizeImage)
+                    )
+                    Text(
+                        text = stringResource(id = R.string.error_title),
+                        style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.error,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Text(
+                        text = stringResource(id = R.string.error_subtitle),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.error
+                    )
+                }
+            }
+
+            Button(
+                modifier = Modifier,
+                onClick = onRetryAction
+            ) {
+                Text(text = stringResource(id = R.string.error_retry))
             }
         }
-
-        Button(
-            modifier = Modifier,
-            onClick = onRetryAction
-        ) {
-            Text(text = stringResource(id = R.string.error_retry))
-        }
     }
+
 
 }
 
@@ -99,7 +106,7 @@ fun ErrorAndRetry(
 @Composable
 fun ErrorAndRetryPreview() {
     MeLi_JuanCTheme {
-        ErrorAndRetry(
+        ErrorAndRetryView(
             modifier = Modifier, onRetryAction = {}
         )
     }
