@@ -74,7 +74,6 @@ fun ErrorAndRetry(
                     style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.colorScheme.error,
                     fontWeight = FontWeight.Bold
-
                 )
                 Text(
                     text = stringResource(id = R.string.error_subtitle),

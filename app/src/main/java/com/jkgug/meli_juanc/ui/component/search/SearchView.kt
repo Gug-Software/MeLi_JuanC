@@ -6,10 +6,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -17,6 +19,7 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -41,6 +44,7 @@ fun SearchView(
     }
 
     val cardElevation = dimensionResource(R.dimen.card_elevation)
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     Card(
         modifier = modifier,
@@ -60,6 +64,16 @@ fun SearchView(
                 focusedIndicatorColor = Color.White,
                 unfocusedIndicatorColor = Color.White
             ),
+            trailingIcon = {
+                if (searchKeyValue.isNotEmpty()) {
+                    IconButton(onClick = { onSearchChanged("") }) {
+                        Icon(
+                            Icons.Default.Clear,
+                            contentDescription = "Clear text"
+                        )
+                    }
+                }
+            },
             modifier = Modifier.fillMaxWidth(),
             placeholder = {
                 Text(
@@ -73,7 +87,10 @@ fun SearchView(
                 keyboardType = KeyboardType.Text,
             ),
             keyboardActions = KeyboardActions(
-                onSearch = { onSearchChanged.invoke(searchKeyValue) }
+                onSearch = {
+                    onSearchChanged.invoke(searchKeyValue)
+                    keyboardController?.hide()
+                }
             )
         )
     }

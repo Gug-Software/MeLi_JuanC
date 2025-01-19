@@ -7,22 +7,32 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.jkgug.meli_juanc.R
 import com.jkgug.meli_juanc.ui.component.common.EmptyContent
 import com.jkgug.meli_juanc.ui.component.common.Greeting
+import com.jkgug.meli_juanc.ui.component.common.LoaderContent
+import com.jkgug.meli_juanc.ui.component.common.NotResultsContent
+import com.jkgug.meli_juanc.ui.component.search.SearchResultsView
 import com.jkgug.meli_juanc.ui.component.search.SearchView
 import com.jkgug.meli_juanc.ui.theme.MeLi_JuanCTheme
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun SearchScreen(
+    viewModel: SearchViewModel = koinViewModel(),
 ) {
 
     val mediumSpace = dimensionResource(R.dimen.space_m)
+
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     ConstraintLayout(
         modifier = Modifier
@@ -32,7 +42,7 @@ fun SearchScreen(
 
         val (topContent, search, bottomContent) = createRefs()
         Greeting(
-            isLoading = false,
+            isLoading = uiState.loading,
             modifier = Modifier
                 .fillMaxWidth()
                 .constrainAs(topContent) {
@@ -42,8 +52,8 @@ fun SearchScreen(
                 }
         )
         SearchView(
-            onSearchChanged = {},
-            searchKeyValue = "hi",
+            onSearchChanged = { viewModel.onSearchChanged(it) },
+            searchKeyValue = viewModel.searchKey,
             modifier = Modifier
                 .fillMaxWidth()
                 .constrainAs(search) {
@@ -54,21 +64,26 @@ fun SearchScreen(
         )
 
         Box(
-            contentAlignment = Alignment.Center,
+            contentAlignment = Alignment.TopCenter,
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(mediumSpace)
+                .fillMaxSize()
                 .constrainAs(bottomContent) {
                     top.linkTo(search.bottom, mediumSpace)
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
                     bottom.linkTo(parent.bottom)
+                    height = Dimension.fillToConstraints
                 }
         ) {
-            EmptyContent(modifier = Modifier.fillMaxWidth())
-            //LoaderContent(modifier = Modifier.fillMaxWidth())
-            //NotResultsContent(modifier = Modifier.fillMaxWidth())
-            //ErrorAndRetry({}, modifier = Modifier.fillMaxWidth())
+            if (uiState.results.isNotEmpty()) {
+                SearchResultsView(products = uiState.results)
+            } else {
+                when {
+                    uiState.starting -> EmptyContent(modifier = Modifier.fillMaxSize())
+                    uiState.loading -> LoaderContent(modifier = Modifier.fillMaxSize())
+                    else -> NotResultsContent(modifier = Modifier.fillMaxWidth())
+                }
+            }
         }
     }
 }

@@ -19,5 +19,10 @@
     <string name="error_subtitle">Por favor, inténtalo de nuevo más tarde.</string>
     <string name="error_retry">Reintentar</string>
 
+    <string name="product_installments_in">en</string>
+    <string name="product_installments_text">%1$s cuotas de %2$s con %3$s%% interés</string>
+
+    <string name="product_free_shipping">Envío gratis</string>
+
 
 </resources>
