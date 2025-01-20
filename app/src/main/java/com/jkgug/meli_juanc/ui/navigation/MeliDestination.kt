@@ -13,9 +13,9 @@ object Search : MeliDestination {
 
 object ProductDetails : MeliDestination {
     override val route = "productDetails"
-    const val PRODUCT_ID = "productIdArg"
-    val routeWithArgs = "${route}/{${PRODUCT_ID}}"
+    const val PRODUCT_ID_ARG = "productIdArg"
+    val routeWithArgs = "${route}/{${PRODUCT_ID_ARG}}"
     val arguments = listOf(
-        navArgument(PRODUCT_ID) { type = NavType.StringType }
+        navArgument(PRODUCT_ID_ARG) { type = NavType.StringType }
     )
 }

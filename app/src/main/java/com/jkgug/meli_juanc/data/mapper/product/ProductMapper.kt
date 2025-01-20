@@ -11,7 +11,7 @@ class ProductMapper : Mapper<Result, Product> {
     override fun mapFrom(from: Result): Product = Product(
         id = from.id,
         title = from.title,
-        thumbnail = from.thumbnailId,
+        thumbnail = from.thumbnail,
         price = ProductPrice(price = from.price, originalPrice = from.originalPrice),
         installments = from.installments?.let {
             ProductInstallments(

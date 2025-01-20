@@ -15,7 +15,6 @@ import com.jkgug.meli_juanc.ui.theme.MeLi_JuanCTheme
 
 @Composable
 fun Greeting(
-    isLoading: Boolean,
     modifier: Modifier
 ) {
 
@@ -42,8 +41,6 @@ fun Greeting(
 @Composable
 fun GreetingPreview() {
     MeLi_JuanCTheme {
-        Greeting(
-            isLoading = false, modifier = Modifier
-        )
+        Greeting(modifier = Modifier)
     }
 }

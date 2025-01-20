@@ -33,7 +33,9 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun SearchScreen(
     snackBarHostState: SnackbarHostState,
-    viewModel: SearchViewModel = koinViewModel()
+    viewModel: SearchViewModel = koinViewModel(),
+    onProductClick: (String) -> Unit = {},
+    modifier: Modifier = Modifier
 ) {
 
     val mediumSpace = dimensionResource(R.dimen.space_m)
@@ -42,14 +44,13 @@ fun SearchScreen(
     val scope = rememberCoroutineScope()
 
     ConstraintLayout(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .padding(mediumSpace)
     ) {
         val (topContent, search, bottomContent) = createRefs()
 
         Greeting(
-            isLoading = uiState.loading,
             modifier = Modifier
                 .fillMaxWidth()
                 .constrainAs(topContent) {
@@ -84,7 +85,10 @@ fun SearchScreen(
                 }
         ) {
             if (uiState.results.isNotEmpty()) {
-                SearchResultsView(products = uiState.results)
+                SearchResultsView(
+                    products = uiState.results,
+                    onProductClick = onProductClick
+                )
             } else {
                 when {
                     uiState.starting -> EmptyContent(modifier = Modifier.fillMaxSize())
@@ -117,7 +121,8 @@ fun SearchScreen(
 fun SearchScreenPreview() {
     MeLi_JuanCTheme {
         SearchScreen(
-            snackBarHostState = SnackbarHostState()
+            snackBarHostState = SnackbarHostState(),
+            onProductClick = { _ -> }
         )
     }
 }

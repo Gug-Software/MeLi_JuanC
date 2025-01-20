@@ -23,6 +23,7 @@
     <string name="product_installments_text">%1$s cuotas de %2$s con %3$s%% interés</string>
 
     <string name="product_free_shipping">Envío gratis</string>
+    <string name="product_details_text_attributes">Características del producto</string>
 
 
 </resources>

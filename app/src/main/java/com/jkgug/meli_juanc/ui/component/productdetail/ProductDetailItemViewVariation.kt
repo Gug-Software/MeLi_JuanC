@@ -1,38 +1,40 @@
-package com.jkgug.meli_juanc.ui.component.search.resultitem
+package com.jkgug.meli_juanc.ui.component.productdetail
 
 import android.content.res.Configuration.UI_MODE_NIGHT_NO
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.jkgug.meli_juanc.R
-import com.jkgug.meli_juanc.domain.Product
-import com.jkgug.meli_juanc.domain.ProductInstallments
-import com.jkgug.meli_juanc.domain.ProductPrice
+import com.jkgug.meli_juanc.domain.ProductDetailsAttribute
 import com.jkgug.meli_juanc.ui.theme.MeLi_JuanCTheme
 
 @Composable
-fun SearchResultItem(
-    product: Product,
+fun ProductDetailItemViewVariation(
+    productVariation: ProductDetailsAttribute,
     modifier: Modifier = Modifier
 ) {
 
-    val spaceS = dimensionResource(R.dimen.space_s)
+    val spaceXS = dimensionResource(R.dimen.space_xs)
 
     ConstraintLayout(
         modifier = modifier
             .fillMaxWidth()
-            .padding(bottom = spaceS)
+            .padding(bottom = spaceXS)
     ) {
 
         val (leftContent, rightContent) = createRefs()
-        SearchResultItemImage(
-            product.thumbnail,
+        Text(
+            text = productVariation.name,
+            style = MaterialTheme.typography.titleSmall,
             modifier = Modifier.constrainAs(leftContent) {
                 start.linkTo(parent.start)
                 top.linkTo(parent.top)
@@ -40,17 +42,20 @@ fun SearchResultItem(
             }
         )
 
-        SearchResultItemData(
-            product = product,
+        Text(
+            text = productVariation.value,
+            style = MaterialTheme.typography.bodyMedium,
+            fontWeight = FontWeight.Bold,
             modifier = Modifier
                 .constrainAs(rightContent) {
-                    start.linkTo(leftContent.end, spaceS)
+                    start.linkTo(leftContent.end, spaceXS)
                     end.linkTo(parent.end)
                     top.linkTo(parent.top)
                     bottom.linkTo(parent.bottom)
                     width = Dimension.fillToConstraints
                 }
         )
+
     }
 }
 
@@ -61,19 +66,10 @@ fun SearchResultItem(
 @Composable
 fun SearchResultItemPreview() {
     MeLi_JuanCTheme {
-        SearchResultItem(
-            product = Product(
-                id = "algo",
-                title = "Algo de zidane",
-                thumbnail = "",
-                price = ProductPrice(price = 23000.0, originalPrice = 35000.0),
-                installments = ProductInstallments(
-                    quantity = 12,
-                    rate = 0,
-                    amount = 4500.0
-                ),
-                freeShipping = true
-
+        ProductDetailItemViewVariation(
+            productVariation = ProductDetailsAttribute(
+                name = "Leanna McCray",
+                value = "habeo"
             )
         )
     }

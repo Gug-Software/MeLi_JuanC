@@ -60,6 +60,10 @@ dependencies {
     implementation(libs.retrofit) // Replace with latest Retrofit version
     implementation(libs.converter.gson)
 
+    implementation(libs.landscapist.glide)
+    implementation(libs.coil.compose)
+
+
 
     testImplementation(libs.junit)
 

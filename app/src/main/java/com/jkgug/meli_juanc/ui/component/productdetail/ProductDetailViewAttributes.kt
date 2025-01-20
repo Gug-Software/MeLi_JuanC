@@ -1,4 +1,4 @@
-package com.jkgug.meli_juanc.ui.screen.product
+package com.jkgug.meli_juanc.ui.component.productdetail
 
 import android.content.res.Configuration.UI_MODE_NIGHT_NO
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
@@ -6,51 +6,43 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.SnackbarHostState
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.jkgug.meli_juanc.R
-import com.jkgug.meli_juanc.ui.component.common.ErrorAndRetryView
-import com.jkgug.meli_juanc.ui.component.common.Greeting
-import com.jkgug.meli_juanc.ui.component.common.LoaderContent
-import com.jkgug.meli_juanc.ui.component.productdetail.ProductDetailView
+import com.jkgug.meli_juanc.domain.ProductDetailsAttribute
 import com.jkgug.meli_juanc.ui.theme.MeLi_JuanCTheme
-import kotlinx.coroutines.launch
-import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun ProductDetailsScreen(
-    snackBarHostState: SnackbarHostState,
-    onBackNavigation: () -> Boolean,
-    viewModel: ProductDetailsViewModel = koinViewModel(),
+fun ProductDetailViewAttributes(
+    attributeList: List<ProductDetailsAttribute>,
     modifier: Modifier = Modifier
 ) {
 
     val mediumSpace = dimensionResource(R.dimen.space_m)
 
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    val scope = rememberCoroutineScope()
-
     ConstraintLayout(
         modifier = modifier
             .fillMaxSize()
-            .padding(mediumSpace)
-            .verticalScroll(rememberScrollState())
+            .padding(top = mediumSpace)
     ) {
         val (topContent, bottomContent) = createRefs()
 
-        Greeting(
+        Text(
+            text = stringResource(R.string.product_details_text_attributes),
+            style = MaterialTheme.typography.titleMedium,
+            color = MaterialTheme.colorScheme.tertiary,
+            fontWeight = FontWeight.Bold,
             modifier = Modifier
                 .fillMaxWidth()
                 .constrainAs(topContent) {
@@ -72,41 +64,41 @@ fun ProductDetailsScreen(
                     height = Dimension.fillToConstraints
                 }
         ) {
-            uiState.productDetails?.let {
-                ProductDetailView(it)
-            } ?: run {
-                when {
-                    uiState.loading -> LoaderContent(modifier = Modifier.fillMaxSize())
-                    uiState.error -> ErrorAndRetryView(
-                        onRetryAction = { viewModel.getProductDetails() },
-                        modifier = Modifier.fillMaxSize()
-                    )
+            if (attributeList.isNotEmpty()) {
+                LazyColumn(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    itemsIndexed(
+                        items = attributeList,
+                        itemContent = { index, item ->
+                            ProductDetailItemViewAttribute(attribute = item, index)
+                        })
                 }
             }
+
         }
 
     }
-
-    uiState.messageForUser?.let { userMessage ->
-        LaunchedEffect(userMessage) {
-            scope.launch {
-                snackBarHostState.showSnackbar(userMessage)
-                viewModel.snackBarMessageShown()
-            }
-        }
-    }
-
 }
 
 @Preview(showBackground = true)
 @Preview(uiMode = UI_MODE_NIGHT_YES, name = "DefaultPreviewDark")
 @Preview(uiMode = UI_MODE_NIGHT_NO, name = "DefaultPreviewLight")
 @Composable
-fun ProductDetailsScreenPreview() {
+fun ProductDetailViewAttributesPreview() {
     MeLi_JuanCTheme {
-        ProductDetailsScreen(
-            onBackNavigation = { true },
-            snackBarHostState = SnackbarHostState()
+        ProductDetailViewVariations(
+            listProductDetailsVariation = listOf(
+                ProductDetailsAttribute(
+                    name = "Arline Sullivan", value = "erat"
+                ),
+                ProductDetailsAttribute(
+                    name = "Arline Sullivan", value = "erat"
+                ),
+                ProductDetailsAttribute(
+                    name = "Arline Sullivan", value = "erat"
+                ),
+            )
         )
     }
 }

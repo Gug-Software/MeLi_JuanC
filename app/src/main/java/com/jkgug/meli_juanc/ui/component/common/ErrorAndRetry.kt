@@ -44,7 +44,7 @@ fun ErrorAndRetryView(
         modifier = modifier
     ) {
         Column(
-            modifier = modifier
+            modifier = Modifier
                 .padding(spaceXL),
             verticalArrangement = Arrangement.spacedBy(spaceS),
             horizontalAlignment = Alignment.CenterHorizontally

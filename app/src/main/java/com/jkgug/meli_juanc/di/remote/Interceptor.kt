@@ -12,12 +12,12 @@ class LoggingInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
         val time1 = System.nanoTime()
-        Log.d("LoggingInterceptor", "Sending request ${request.url()}")
+        Log.d("LoggingInterceptor", "Sending request ${request.url}")
         val response = chain.proceed(request)
         val time2 = System.nanoTime()
         Log.d(
             "LoggingInterceptor",
-            "Received response for ${request.url()} in ${(time2 - time1) / 1e6}ms"
+            "Received response for ${request.url} in ${(time2 - time1) / 1e6}ms"
         )
         return response
     }
