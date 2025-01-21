@@ -45,7 +45,6 @@ fun ProductDetailsScreen(
         modifier = modifier
             .fillMaxSize()
             .padding(mediumSpace)
-            .verticalScroll(rememberScrollState())
     ) {
         val (topContent, bottomContent) = createRefs()
 

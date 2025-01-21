@@ -18,6 +18,7 @@ fun MeliNavHost(
 ) {
 
     val startDestination = Search.route
+
     NavHost(
         navController = navController,
         startDestination = startDestination,
@@ -36,12 +37,9 @@ fun MeliNavHost(
         }
 
         composable(
-            route = ProductDetails.routeWithArgs,
-            arguments = ProductDetails.arguments,
+            route = ProductDetails.routeWithArgs, arguments = ProductDetails.arguments,
         ) {
-            ProductDetailsScreen(
-                snackBarHostState
-            )
+            ProductDetailsScreen(snackBarHostState)
         }
 
     }
