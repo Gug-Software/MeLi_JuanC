@@ -51,33 +51,35 @@ class SearchRemoteMeliApiUnitTest {
             listProductsForTests[0]
         )
 
-        // Act
+        // WHEN
         val results = repository.searchByQuery(query)
 
+        // THEN
         results.collect {
             assert(it is NetworkResult.Success)
         }
-        verify(mockMapper).mapFrom(any())
-
+        verify(mockMapper).mapFrom(searchResultsDtoOutForTest.results[0])
+        verify(mockApi).search(query)
     }
 
     @Test
     fun test_searchByQuery_returnsError_whenApiUnsuccessful() = runTest {
         // GIVEN
-        `when`(mockResponse.isSuccessful).thenReturn(false) // Simulate unsuccessful response
-        `when`(mockResponse.message()).thenReturn("Mocked exception message") // Set a custom error message
+        `when`(mockResponse.isSuccessful).thenReturn(false)
+        `when`(mockResponse.body()).thenReturn(searchResultsDtoOutForTest)
+        `when`(mockResponse.message()).thenReturn("Mocked exception message")
         `when`(mockApi.search(query)).thenReturn(mockResponse as Response<SearchResultsDtoOut>?)
-        `when`(mockMapper.mapFrom(searchResultsDtoOutForTest.results[0])).thenReturn(
-            listProductsForTests[0]
-        )
 
+        // WHEN
         val result = repository.searchByQuery(query)
 
+        // THEN
         result.collect {
             assert(it is NetworkResult.Error)
+            assert(it.message == "Mocked exception message")
         }
+        verify(mockApi).search(query)
         verifyNoInteractions(mockMapper)
-
     }
 
     @Test
@@ -86,37 +88,40 @@ class SearchRemoteMeliApiUnitTest {
         val expectedException = RuntimeException("Mocked search error")
         whenever(mockApi.search(query)).thenThrow(expectedException)
 
-        // Act
+        // WHEN
         val results = repository.searchByQuery(query)
 
+        // THEN
         results.collect {
             assert(it is NetworkResult.Error)
+            assert(it.message == "Mocked search error")
         }
+        verify(mockApi).search(query)
         verifyNoInteractions(mockMapper)
-
     }
 
     @Test
     fun test_searchByQuery_returnsSuccess_withMappedProducts() = runTest {
         // GIVEN
-        `when`(mockApi.search(query)).thenReturn(
-            Response.success(searchResultsDtoOutForTest)
-        )
+        `when`(mockResponse.isSuccessful).thenReturn(true)
+        `when`(mockResponse.body()).thenReturn(searchResultsDtoOutForTest)
+        `when`(mockApi.search(query)).thenReturn(mockResponse as Response<SearchResultsDtoOut>?)
         `when`(mockMapper.mapFrom(searchResultsDtoOutForTest.results[0])).thenReturn(
             listProductsForTests[0]
         )
 
-        // Act
+        // WHEN
         val results = repository.searchByQuery(query)
 
+        // THEN
         results.collect {
             assert(it is NetworkResult.Success)
             assert(it.data is List<*>)
             val data = it.data as List<Product>
-            assert(data.size == 1)
+            assert(data.size == searchResultsDtoOutForTest.results.size)
         }
+        verify(mockApi).search(query)
         verify(mockMapper).mapFrom(any())
-
     }
 
 }

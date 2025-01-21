@@ -29,33 +29,33 @@ class SearchProductsUseCaseUnitTest {
     }
 
     @Test
-    fun invoke_success() = runTest {
+    fun test_invoke_verifies_repository_call_on_success() = runTest {
         // GIVEN
         `when`(mockRepository.searchByQuery(query)).thenReturn(
             flow { emit(NetworkResult.Success(listProductsForTests)) }
         )
-        // Act
+        // WHEN
         useCase(query)
 
-        // Assert
+        // THEN
         Mockito.verify(mockRepository).searchByQuery(query)
     }
 
     @Test
-    fun invoke_error() = runTest {
+    fun test_invoke_verifies_repository_call_on_error() = runTest {
         // GIVEN
         `when`(mockRepository.searchByQuery(query)).thenReturn(
             flow { NetworkResult.Error(message = messageError, data = null) }
         )
-        // Act
+        // WHEN
         useCase(query)
 
-        // Assert
+        // THEN
         Mockito.verify(mockRepository).searchByQuery(query)
     }
 
     @Test
-    fun `invoke_whenSignInWithEmailAndPasswordSucceeds_flow is success`(): Unit = runTest {
+    fun test_invoke_success_emits_product_list(): Unit = runTest {
         // GIVEN
         `when`(mockRepository.searchByQuery(query)).thenReturn(
             flow { emit(NetworkResult.Success(listProductsForTests)) }
@@ -71,7 +71,7 @@ class SearchProductsUseCaseUnitTest {
     }
 
     @Test
-    fun `invoke_whenSignInWithEmailAndPasswordSucceeds_flow is error`(): Unit = runTest {
+    fun test_invoke_emits_error_on_search_failure(): Unit = runTest {
         // GIVEN
         `when`(mockRepository.searchByQuery(query)).thenReturn(
             flow { NetworkResult.Error(message = messageError, data = null) }

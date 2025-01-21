@@ -17,10 +17,10 @@ class ProductDetailsUseCaseUnitTest {
     @Mock
     private lateinit var mockRepository: ItemDetailsRemoteRepository
 
+    private lateinit var useCase: ProductDetailsUseCaseImpl
+
     private val productId = "some"
     private val messageError = "message error"
-
-    private lateinit var useCase: ProductDetailsUseCaseImpl
 
     @Before
     fun setUp() {
@@ -29,20 +29,21 @@ class ProductDetailsUseCaseUnitTest {
     }
 
     @Test
-    fun invoke_success() = runTest {
+    fun test_invoke_verifiesRepositoryCall() = runTest {
         // GIVEN
         `when`(mockRepository.itemDetailsById(productId)).thenReturn(
             flow { emit(NetworkResult.Success(productDetailsForTest)) }
         )
-        // Act
+
+        // WHEN
         useCase.invoke(productId)
 
-        // Assert
+        // THEN
         Mockito.verify(mockRepository).itemDetailsById(productId)
     }
 
     @Test
-    fun invoke_error() = runTest {
+    fun test_invoke_verifiesRepositoryCall_onApiError() = runTest {
         // GIVEN
         `when`(mockRepository.itemDetailsById(productId)).thenReturn(
             flow { NetworkResult.Error(message = messageError, data = null) }
@@ -55,7 +56,7 @@ class ProductDetailsUseCaseUnitTest {
     }
 
     @Test
-    fun `invoke_whenSignInWithEmailAndPasswordSucceeds_flow is success`(): Unit = runTest {
+    fun `test_invoke_success_emitsProductDetails is success`(): Unit = runTest {
         // GIVEN
         `when`(mockRepository.itemDetailsById(productId)).thenReturn(
             flow { emit(NetworkResult.Success(productDetailsForTest)) }
@@ -71,12 +72,12 @@ class ProductDetailsUseCaseUnitTest {
     }
 
     @Test
-    fun `invoke_whenSignInWithEmailAndPasswordSucceeds_flow is error`(): Unit = runTest {
+    fun `test_invoke_error_when_itemDetails_fails is error`(): Unit = runTest {
         // GIVEN
         `when`(mockRepository.itemDetailsById(productId)).thenReturn(
             flow { NetworkResult.Error(message = messageError, data = null) }
         )
-        // Act
+        // WHEN
         val flow = useCase.invoke(productId)
 
         // THEN

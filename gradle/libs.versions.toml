@@ -4,6 +4,7 @@ coilCompose = "2.2.2"
 coilComposeVersion = "3.0.4"
 coilKtCoilCompose = "2.2.2"
 converterGson = "2.9.0"
+coreTesting = "2.2.0"
 kotlin = "2.0.0"
 coreKtx = "1.15.0"
 junit = "4.13.2"
@@ -27,6 +28,7 @@ kotlinxCoroutinesTest = "1.8.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-core-testing = { module = "androidx.arch.core:core-testing", version.ref = "coreTesting" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilKtCoilCompose" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }

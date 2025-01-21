@@ -14,7 +14,7 @@ import com.jkgug.meli_juanc.domain.ProductDetailsAttribute
 import com.jkgug.meli_juanc.ui.theme.MeLi_JuanCTheme
 
 @Composable
-fun ProductDetailViewVariations(
+fun ProductDetailViewVariationsOrSaleTerms(
     listProductDetailsVariation: List<ProductDetailsAttribute>,
     modifier: Modifier = Modifier
 ) {
@@ -45,7 +45,7 @@ fun ProductDetailViewVariations(
 @Composable
 fun ProductDetailViewVariationsPreview() {
     MeLi_JuanCTheme {
-        ProductDetailViewVariations(
+        ProductDetailViewVariationsOrSaleTerms(
             listProductDetailsVariation = listOf(
                 ProductDetailsAttribute(
                     name = "Arline Sullivan", value = "erat"
@@ -53,8 +53,7 @@ fun ProductDetailViewVariationsPreview() {
                 ProductDetailsAttribute(
                     name = "Arline Sullivan", value = "erat"
                 )
-            ),
-
             )
+        )
     }
 }

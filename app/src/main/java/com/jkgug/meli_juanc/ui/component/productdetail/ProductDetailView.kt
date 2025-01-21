@@ -54,10 +54,14 @@ fun ProductDetailView(
         if (productDetails.freeShipping) {
             ProductFreeShippingView()
         }
-        ProductDetailViewVariations(productDetails.listVariations)
-        HorizontalDivider(modifier = Modifier.fillMaxWidth(), thickness = lineXS)
+
+        if (productDetails.listVariations.isNotEmpty()) {
+            ProductDetailViewVariationsOrSaleTerms(productDetails.listVariations)
+            HorizontalDivider(modifier = Modifier.fillMaxWidth(), thickness = lineXS)
+        }
+
         if (productDetails.listSaleTerms.isNotEmpty()) {
-            ProductDetailViewVariations(productDetails.listSaleTerms)
+            ProductDetailViewVariationsOrSaleTerms(productDetails.listSaleTerms)
             HorizontalDivider(modifier = Modifier.fillMaxWidth(), thickness = lineXS)
         }
         ProductDetailViewAttributes(productDetails.listAttributes)

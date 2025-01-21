@@ -41,7 +41,6 @@ class ItemDetailsRemoteMeliApiUnitTest {
         repository = ItemDetailsRemoteMeliApi(mockApi, mockMapper)
     }
 
-
     @Test
     fun test_itemDetailsById_returnsSuccess_whenApiSuccessfulAndBodyNotNull() = runTest {
         // GIVEN
@@ -50,31 +49,35 @@ class ItemDetailsRemoteMeliApiUnitTest {
         `when`(mockApi.itemsById(productId)).thenReturn(mockResponse as Response<ItemDetailsDtoOut>?)
         `when`(mockMapper.mapFrom(itemDetailsDtoOutForTest)).thenReturn(productDetailsForTest)
 
-        // Act
+        // WHEN
         val results = repository.itemDetailsById(productId)
 
+        // THEN
         results.collect {
             assert(it is NetworkResult.Success)
         }
-        verify(mockMapper).mapFrom(any())
-
+        verify(mockApi).itemsById(productId)
+        verify(mockMapper).mapFrom(itemDetailsDtoOutForTest)
     }
 
     @Test
     fun test_itemDetailsById_returnsError_whenApiUnsuccessful() = runTest {
         // GIVEN
-        `when`(mockResponse.isSuccessful).thenReturn(false) // Simulate unsuccessful response
-        `when`(mockResponse.message()).thenReturn("Mocked exception message") // Set a custom error message
+        `when`(mockResponse.isSuccessful).thenReturn(false)
+        `when`(mockResponse.message()).thenReturn("Mocked exception message")
         `when`(mockApi.itemsById(productId)).thenReturn(mockResponse as Response<ItemDetailsDtoOut>?)
         `when`(mockMapper.mapFrom(itemDetailsDtoOutForTest)).thenReturn(productDetailsForTest)
 
+        // WHEN
         val result = repository.itemDetailsById(productId)
 
+        // THEN
         result.collect {
             assert(it is NetworkResult.Error)
+            assert(it.message == "Mocked exception message")
         }
+        verify(mockApi).itemsById(productId)
         verifyNoInteractions(mockMapper)
-
     }
 
     @Test
@@ -83,32 +86,35 @@ class ItemDetailsRemoteMeliApiUnitTest {
         val expectedException = RuntimeException("Mocked search error")
         whenever(mockApi.itemsById(productId)).thenThrow(expectedException)
 
-        // Act
+        // WHEN
         val results = repository.itemDetailsById(productId)
 
+        // THEN
         results.collect {
             assert(it is NetworkResult.Error)
+            assert(it.message == "Mocked search error")
         }
+        verify(mockApi).itemsById(productId)
         verifyNoInteractions(mockMapper)
-
     }
 
     @Test
     fun test_itemDetailsById_returnsSuccess_withMappedProducts() = runTest {
         // GIVEN
-        `when`(mockApi.itemsById(productId)).thenReturn(
-            Response.success(itemDetailsDtoOutForTest)
-        )
+        `when`(mockResponse.isSuccessful).thenReturn(true)
+        `when`(mockResponse.body()).thenReturn(itemDetailsDtoOutForTest)
+        `when`(mockApi.itemsById(productId)).thenReturn(mockResponse as Response<ItemDetailsDtoOut>?)
         `when`(mockMapper.mapFrom(itemDetailsDtoOutForTest)).thenReturn(productDetailsForTest)
 
-        // Act
+        // WHEN
         val results = repository.itemDetailsById(productId)
 
+        // THEN
         results.collect {
             assert(it is NetworkResult.Success)
             assert(it.data is ProductDetails)
         }
-        verify(mockMapper).mapFrom(any())
-
+        verify(mockApi).itemsById(productId)
+        verify(mockMapper).mapFrom(itemDetailsDtoOutForTest)
     }
 }

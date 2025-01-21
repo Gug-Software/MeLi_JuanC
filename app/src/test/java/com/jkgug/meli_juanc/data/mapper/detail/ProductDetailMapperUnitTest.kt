@@ -23,6 +23,7 @@ class ProductDetailMapperUnitTest {
 
     @Test
     fun `maps item details with all fields to product details`() {
+        // GIVEN
         val itemDetails = mockItemDetails(
             id = "test_id",
             title = "Test Title",
@@ -51,8 +52,10 @@ class ProductDetailMapperUnitTest {
             shipping = Shipping(true)
         )
 
+        // WHEN
         val productDetails = mapper.mapFrom(itemDetails)
 
+        // THEN
         assertEquals("test_id", productDetails.id)
         assertEquals("Test Title", productDetails.title)
         assertEquals("https://example.com/thumbnail.jpg", productDetails.thumbnail)
@@ -76,6 +79,7 @@ class ProductDetailMapperUnitTest {
 
     @Test
     fun `maps item details with missing fields to product details`() {
+        // GIVEN
         val itemDetails = mockItemDetails(
             id = "test_id",
             title = "Test Title",
@@ -89,8 +93,10 @@ class ProductDetailMapperUnitTest {
             shipping = Shipping(true)
         )
 
+        // WHEN
         val productDetails = mapper.mapFrom(itemDetails)
 
+        // THEN
         assertEquals("test_id", productDetails.id)
         assertEquals("Test Title", productDetails.title)
         assertEquals("https://example.com/thumbnail.jpg", productDetails.thumbnail)

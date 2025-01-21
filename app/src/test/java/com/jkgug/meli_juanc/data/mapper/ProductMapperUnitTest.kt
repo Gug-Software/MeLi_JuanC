@@ -19,6 +19,7 @@ class ProductMapperUnitTest {
 
     @Test
     fun `maps result to product with all fields`() {
+        // GIVEN
         val result = mockResult(
             id = "test_id",
             title = "Test Title",
@@ -29,8 +30,10 @@ class ProductMapperUnitTest {
             freeShipping = true
         )
 
+        // WHEN
         val product = mapper.mapFrom(result)
 
+        // THEN
         assertEquals("test_id", product.id)
         assertEquals("Test Title", product.title)
         assertEquals("https://example.com/thumbnail.jpg", product.thumbnail)
@@ -44,6 +47,7 @@ class ProductMapperUnitTest {
 
     @Test
     fun `maps result to product with missing installments`() {
+        // GIVEN
         val result = mockResult(
             id = "test_id",
             title = "Test Title",
@@ -54,8 +58,10 @@ class ProductMapperUnitTest {
             freeShipping = false
         )
 
+        // WHEN
         val product = mapper.mapFrom(result)
 
+        // THEN
         assertEquals("test_id", product.id)
         assertEquals("Test Title", product.title)
         assertEquals("https://example.com/thumbnail.jpg", product.thumbnail)

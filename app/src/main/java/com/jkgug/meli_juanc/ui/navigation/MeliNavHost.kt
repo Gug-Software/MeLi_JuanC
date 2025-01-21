@@ -40,8 +40,7 @@ fun MeliNavHost(
             arguments = ProductDetails.arguments,
         ) {
             ProductDetailsScreen(
-                snackBarHostState,
-                onBackNavigation = { navController.popBackStack() },
+                snackBarHostState
             )
         }
 

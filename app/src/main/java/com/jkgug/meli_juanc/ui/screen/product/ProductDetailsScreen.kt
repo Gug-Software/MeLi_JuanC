@@ -32,7 +32,6 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun ProductDetailsScreen(
     snackBarHostState: SnackbarHostState,
-    onBackNavigation: () -> Boolean,
     viewModel: ProductDetailsViewModel = koinViewModel(),
     modifier: Modifier = Modifier
 ) {
@@ -105,7 +104,6 @@ fun ProductDetailsScreen(
 fun ProductDetailsScreenPreview() {
     MeLi_JuanCTheme {
         ProductDetailsScreen(
-            onBackNavigation = { true },
             snackBarHostState = SnackbarHostState()
         )
     }

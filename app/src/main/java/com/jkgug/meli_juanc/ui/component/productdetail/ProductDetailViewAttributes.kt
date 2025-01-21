@@ -87,7 +87,7 @@ fun ProductDetailViewAttributes(
 @Composable
 fun ProductDetailViewAttributesPreview() {
     MeLi_JuanCTheme {
-        ProductDetailViewVariations(
+        ProductDetailViewVariationsOrSaleTerms(
             listProductDetailsVariation = listOf(
                 ProductDetailsAttribute(
                     name = "Arline Sullivan", value = "erat"

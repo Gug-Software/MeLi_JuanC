@@ -24,7 +24,7 @@ class SearchViewModel(
     private val _uiState = MutableStateFlow(SearchUiState())
     val uiState: StateFlow<SearchUiState> = _uiState.asStateFlow()
 
-    var searchKey by mutableStateOf("zidane")
+    var searchKey by mutableStateOf("")
         private set
 
     private var searchJob: Job? = null
