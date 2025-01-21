@@ -8,8 +8,6 @@ data class Installments(
     val amount: Double,
     @SerializedName("currency_id")
     val currencyId: String,
-    @SerializedName("metadata")
-    val metadata: Metadata,
     @SerializedName("quantity")
     val quantity: Int,
     @SerializedName("rate")

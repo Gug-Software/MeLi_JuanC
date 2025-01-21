@@ -10,6 +10,9 @@ import com.jkgug.meli_juanc.domain.ProductDetails
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
+const val KEY_PRODUCT_MAPPER = "PRODUCT_MAPPER"
+const val KEY_PRODUCT_DETAILS_MAPPER = "PRODUCT_DETAILS_MAPPER"
+
 class MapperModule {
 
     companion object {
@@ -17,11 +20,11 @@ class MapperModule {
         val mapperModule = module {
 
             single<Mapper<Result, Product>>(
-                named("uno")
+                named(KEY_PRODUCT_MAPPER)
             ) { ProductMapper() }
 
             single<Mapper<ItemDetailsDtoOut, ProductDetails>>(
-                named("dos")
+                named(KEY_PRODUCT_DETAILS_MAPPER)
             ) { ProductDetailMapper() }
 
         }

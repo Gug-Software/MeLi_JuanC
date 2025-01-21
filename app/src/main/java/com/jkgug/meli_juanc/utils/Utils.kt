@@ -10,3 +10,7 @@ fun formatDoubleWithThousandsSeparator(
     val numberFormat = NumberFormat.getNumberInstance(locale)
     return numberFormat.format(number)
 }
+
+fun calculatePercentDiscount(price: Double, originalPrice: Double): Int {
+    return 100 - ((price / originalPrice) * 100).toInt()
+}

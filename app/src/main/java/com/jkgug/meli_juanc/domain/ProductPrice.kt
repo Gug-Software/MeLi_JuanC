@@ -1,5 +1,6 @@
 package com.jkgug.meli_juanc.domain
 
+import com.jkgug.meli_juanc.utils.calculatePercentDiscount
 import com.jkgug.meli_juanc.utils.formatDoubleWithThousandsSeparator
 
 data class ProductPrice(
@@ -13,8 +14,9 @@ data class ProductPrice(
         "$${formatDoubleWithThousandsSeparator(it)}"
     } ?: run { "" }
 
-    val percentDiscount = originalPrice?.let {
-        "${100 - ((price / it) * 100).toInt()}% OFF"
-    } ?: run { "" }
+    val percentDiscount =
+        originalPrice?.let {
+            "${calculatePercentDiscount(price, it)}% OFF"
+        } ?: run { "" }
 }
 

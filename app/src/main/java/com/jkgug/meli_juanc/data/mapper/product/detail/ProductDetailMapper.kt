@@ -11,11 +11,11 @@ class ProductDetailMapper : Mapper<ItemDetailsDtoOut, ProductDetails> {
     override fun mapFrom(from: ItemDetailsDtoOut): ProductDetails = ProductDetails(
         id = from.id,
         title = from.title,
-        thumbnail = from.thumbnailId,
+        thumbnail = from.thumbnail,
         price = ProductPrice(price = from.price, originalPrice = from.originalPrice),
         freeShipping = from.shipping.freeShipping,
-        listAttributes = from.attributes?.let {
-            it.map { ProductDetailsAttribute(name = it.name, value = it.valueName ?: "") }
+        listAttributes = from.attributes?.let { attr ->
+            attr.map { ProductDetailsAttribute(name = it.name, value = it.valueName ?: "") }
         } ?: run { emptyList() },
         listVariations = from.variations?.let { variations ->
             if (variations.isNotEmpty()) {
