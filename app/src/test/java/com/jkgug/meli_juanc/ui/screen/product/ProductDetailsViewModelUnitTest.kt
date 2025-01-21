@@ -3,9 +3,7 @@ package com.jkgug.meli_juanc.ui.screen.product
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.SavedStateHandle
 import com.jkgug.meli_juanc.domain.ProductDetails
-import com.jkgug.meli_juanc.ui.screen.search.SearchViewModel
 import com.jkgug.meli_juanc.usecase.ProductDetailsUseCase
-import com.jkgug.meli_juanc.usecase.SearchProductsUseCase
 import com.jkgug.meli_juanc.utils.NetworkResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
